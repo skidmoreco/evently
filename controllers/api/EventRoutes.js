@@ -1,61 +1,77 @@
 const router = require('express').Router();
-const { Event } = require('../../models');
+const { Event, User } = require('../../models');
+const withAuth = require('../../utils/auth');
+const { route } = require('../homeRoutes');
+
+router.get('/', withAuth, async (req, res) => {
+  try {
+    const allEvents = await Event.findall({
+      attributes: ['id', 'name', 'description', 'location', 'event_date', 'event_time', 'event_date', 'expected_attendance'],
+      include: [{
+        model: User,
+        attributes: ['id', 'username', 'email', 'password']
+      }],
+    });
+    res.status(200).json(allEvents);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
+router.get('/:id', withAuth, async (req, res) => {
+  try {
+    const eventSpecific = await Event.findOne({
+      where: {id: req.params.id},
+      attributes: ['id','name', 'description', 'location', 'event_date', 'event_time', 'expected_attendance'],
+      include: [{
+        model: User,
+        attributes: ['id', 'username', 'email', 'password']
+      }],
+    });
+    res.status(200).json(eventSpecific);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
 
 router.post('/', async (req, res) => {
   try {
-    const userData = await User.create(req.body);
-
-    req.session.save(() => {
-      req.session.user_id = userData.id;
-      req.session.logged_in = true;
-
-      res.status(200).json(userData);
-    });
+    const newEvent = await Event.create({
+      event_name: req.body.event_name
+    })
+    res.status(200).json(newEvent);
   } catch (err) {
-    res.status(400).json(err);
+    res.status(500).json(err)
   }
 });
 
-router.post('/login', async (req, res) => {
+router.put('/:id', async (req, res) => {
   try {
-    const userData = await User.findOne({ where: { email: req.body.email } });
-
-    if (!userData) {
-      res
-        .status(400)
-        .json({ message: 'Incorrect email or password, please try again' });
-      return;
-    }
-
-    const validPassword = await userData.checkPassword(req.body.password);
-
-    if (!validPassword) {
-      res
-        .status(400)
-        .json({ message: 'Incorrect email or password, please try again' });
-      return;
-    }
-
-    req.session.save(() => {
-      req.session.user_id = userData.id;
-      req.session.logged_in = true;
-      
-      res.json({ user: userData, message: 'You are now logged in!' });
+    const updateEvent = await Event.update(req.body, {
+      where: {id: req.params.id}
     });
-
+    if (!updateEvent) {
+      res.status(400).json({message: 'Event does not exist!'})
+    }
+    res.status(200).json(updateEvent);
   } catch (err) {
-    res.status(400).json(err);
+    res.status(500).json(err)
   }
 });
 
-router.post('/logout', (req, res) => {
-  if (req.session.logged_in) {
-    req.session.destroy(() => {
-      res.status(204).end();
+router.delete('/:id', async (req, res) => {
+  try {
+    const deleteEvent = await Event.destroy({
+      where: {id: req.params.id}
     });
-  } else {
-    res.status(404).end();
+    if(!deleteEvent) {
+      res.status(400).json({message: 'Event you are trying to delete does not exist!'})
+    }
+    res.status(200).json(deleteEvent)
+  } catch (err) {
+    res.status(500).json(err)
   }
 });
 
 module.exports = router;
+
