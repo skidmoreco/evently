@@ -1,4 +1,5 @@
 const router = require('express').Router();
+<<<<<<< HEAD
 const { Event, User } = require('../../models');
 const withAuth = require('../../utils/auth');
 const { route } = require('../homeRoutes');
@@ -33,18 +34,34 @@ router.get('/:id', withAuth, async (req, res) => {
     res.status(500).json(err);
   }
 });
+=======
+const { Event } = require('../../models');
+const withAuth = require('../../utils/auth');
+>>>>>>> main
 
-router.post('/', async (req, res) => {
+
+router.post('/', withAuth, async (req, res) => {
   try {
     const newEvent = await Event.create({
+<<<<<<< HEAD
       event_name: req.body.event_name
     })
     res.status(200).json(newEvent);
   } catch (err) {
     res.status(500).json(err)
-  }
-});
+=======
+      ...req.body,
+      user_id: req.session.user_id,
+    });
 
+    res.status(200).json(newEvent);
+  } catch (err) {
+    res.status(500).json(err);
+>>>>>>> main
+  }
+})
+
+<<<<<<< HEAD
 router.put('/:id', async (req, res) => {
   try {
     const updateEvent = await Event.update(req.body, {
@@ -72,6 +89,27 @@ router.delete('/:id', async (req, res) => {
     res.status(500).json(err)
   }
 });
+=======
+router.post('/:id', withAuth, async (req, res) => {
+  try {
+    const deleteEvent = await Event.destroy({
+      where: {
+        id: req.params.id,
+        user_id: req.session.user_id,
+      },
+    });
+
+    if (!deleteEvent) {
+      res.status(404).json({ message: 'There is no event found with this particular id! Please try again.' });
+      return;
+    }
+
+    res.status(200).json(deleteEvent);
+  } catch (err) {
+    res.status(500).json(err);
+  }
+})
+>>>>>>> main
 
 module.exports = router;
 
