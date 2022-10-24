@@ -1,61 +1,39 @@
 const router = require('express').Router();
 const { Event } = require('../../models');
+const withAuth = require('../../utils/auth');
 
-router.post('/', async (req, res) => {
+
+router.post('/', withAuth, async (req, res) => {
   try {
-    const userData = await User.create(req.body);
-
-    req.session.save(() => {
-      req.session.user_id = userData.id;
-      req.session.logged_in = true;
-
-      res.status(200).json(userData);
+    const newEvent = await Event.create({
+      ...req.body,
+      user_id: req.session.user_id,
     });
+
+    res.status(200).json(newEvent);
   } catch (err) {
-    res.status(400).json(err);
+    res.status(500).json(err);
   }
-});
+})
 
-router.post('/login', async (req, res) => {
+router.post('/:id', withAuth, async (req, res) => {
   try {
-    const userData = await User.findOne({ where: { email: req.body.email } });
+    const deleteEvent = await Event.destroy({
+      where: {
+        id: req.params.id,
+        user_id: req.session.user_id,
+      },
+    });
 
-    if (!userData) {
-      res
-        .status(400)
-        .json({ message: 'Incorrect email or password, please try again' });
+    if (!deleteEvent) {
+      res.status(404).json({ message: 'There is no event found with this particular id! Please try again.' });
       return;
     }
 
-    const validPassword = await userData.checkPassword(req.body.password);
-
-    if (!validPassword) {
-      res
-        .status(400)
-        .json({ message: 'Incorrect email or password, please try again' });
-      return;
-    }
-
-    req.session.save(() => {
-      req.session.user_id = userData.id;
-      req.session.logged_in = true;
-      
-      res.json({ user: userData, message: 'You are now logged in!' });
-    });
-
+    res.status(200).json(deleteEvent);
   } catch (err) {
-    res.status(400).json(err);
+    res.status(500).json(err);
   }
-});
-
-router.post('/logout', (req, res) => {
-  if (req.session.logged_in) {
-    req.session.destroy(() => {
-      res.status(204).end();
-    });
-  } else {
-    res.status(404).end();
-  }
-});
+})
 
 module.exports = router;
