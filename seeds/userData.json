@@ -1,0 +1,17 @@
+[
+    {
+        "username": "Christopher",
+        "email": "chrischristy@fakemail.com",
+        "password": "password1234"
+    },
+    {
+        "username": "Vito Andolini",
+        "email": "donveetz@fakemail.com",
+        "password": "password1234"
+    },
+    {
+        "username": "Christopher Wallace",
+        "email": "notoriousBIG@fakemail.com",
+        "password": "password1234"
+    }
+]
