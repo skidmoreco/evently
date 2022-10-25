@@ -35,12 +35,13 @@ Event.init(
         type: DataTypes.INTEGER,
         allowNull: true,
     },
-    event_id: {
+    user_id: {
         type: DataTypes.INTEGER,
+        allowNull: false,
         references: {
-        model: 'event',
-        key: 'id',
-        },
+            model: 'user',
+            key: 'id'
+        }
     },
 },
     {
