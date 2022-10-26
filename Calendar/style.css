@@ -214,4 +214,6 @@ pad: 10px;
     }
 }
 
-
+.cst-hide{
+    display: none;
+}
