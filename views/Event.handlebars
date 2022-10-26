@@ -1,6 +1,5 @@
 {{#each events as |event|}}
-<div class="card" style="width: 18rem;">
-    {{!-- have random img function from utils generated below --}}
+<div class="card event-card" style="width: 18rem;">
   <img src={{get_cardImage}} class="card-img-top" alt="stock photo" style="width:17rem; height:9rem;">
   <div class="card-body">
     <h5 class="card-title">{{ event.name }}</h5>
@@ -14,7 +13,6 @@
     <li class="list-group-item">{{}}</li>
   </ul>
   <div class="card-body">
-    <a href="#" class="card-link">maybe a google calendar link if we get this far</a>
     <a href="mailto:{{user.email}}">Email the host here</a>
   </div> 
     <h3><em>Event hosted by {{user.username}}</em></h3>
