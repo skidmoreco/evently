@@ -4,6 +4,7 @@
         "description": "A devilish tea party with guests from all over the world.",
         "location": "Whole Cake Island",
         "event_date": "2023-02-23",
+        "filename": "",
         "event_time": "2:00pm",
         "expected_attendance": 50
     },
@@ -12,6 +13,7 @@
         "description": "We will be hosting a collection of the town's best jazz artists and musicians.",
         "location": "James St. Gastropub",
         "event_date": "2023-06-02",
+        "filename": "",
         "event_time": "8:00pm",
         "expected_attendance": 250
     },
@@ -20,6 +22,7 @@
         "description": "Come join us at the park for tons of live music, food trucks, artists, street performers, and more! Bring the whole family, and yes that means the dog too!",
         "location": "Goodale Park",
         "event_date": "2023-05-18",
+        "filename": "",
         "event_time": "1:00pm",
         "expected_attendance": 4000
     }
