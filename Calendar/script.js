@@ -27,6 +27,7 @@ const month_names = [
     'December',
 ];
 // Pick the month
+var month_txt
 var month_picker = document.querySelector('#month-picker');
 const dayTextFormate = document.querySelector('.day-text-formate');
 
@@ -57,22 +58,29 @@ const generateCalendar = (month, year) => {
     ];
 
     // Pick the month to change to
+    // month_txt.innerHTML = month_names[month];
     month_picker.innerHTML = month_names[month];
     calendar_header_year.innerHTML = year;
     var first_day = new Date(year, month);
 
     for (let i=0; i<=days_of_month[month] + first_day.getDay() - 1; i++) {
         let day = document.createElement('div');
+              
         if (i >= first_day.getDay()) {
             day.innerHTML = i - first_day.getDay() + 1;
+            day.id = `${month + 1}/${i - first_day.getDay() + 1}/${year}`;
+            day.onclick = () => {
+                console.log(`this is my event ${day.id}`)
+            }
             if (i - first_day.getDay() + 1 === currentDate.getDate() && year ===
-                currentDate.getFullYear() && month === currentDate.getMonth()) {
+            currentDate.getFullYear() && month === currentDate.getMonth()) {
                 day.classList.add('current-date');
             }
         }
         calendar_days.appendChild(day);
-    }
+     }
 }
+   
 
 // Display the months to choose
  var month_list = calendar.querySelector('.month-list');
@@ -87,27 +95,45 @@ const generateCalendar = (month, year) => {
     };
  });
  // Display the new chosen month
-  let currentDate = new Date();
-  let currentMonth = { value : currentDate.getMonth()};
-let currentYear = { value: currentDate.getFullYear() };
-  
+    let currentDate = new Date();
+    let currentMonth = { value : currentDate.getMonth()};
+    let currentYear = { value: currentDate.getFullYear() };
 
   
-
-     
-
     month_list.classList.add('hideonce');
+  
+    // selectedEventDate.addEventListener("click", console.log())
+ 
 
 
- document.querySelector('#pre-year').onclick = () => {
+// Move to the previous year
+    document.querySelector('#pre-year').onclick = () => {
      --currentYear.value;
-     
-     generateCalendar(currentMonth.value, currentYear.value);
- };
- document.querySelector('#next-year').onclick = () => {
+    generateCalendar(currentMonth.value, currentYear.value);
+};
+ 
+// Move to the next year
+    document.querySelector('#next-year').onclick = () => {
      ++currentYear.value;
     generateCalendar(currentMonth.value, currentYear.value);
- };
+};
+
+// // Move to the previous month
+//     document.querySelector('#pre-month').onclick = () => {
+//      --currentMonth.value;
+//     generateCalendar(currentMonth.value, currentYear.value);
+//  };
+// // Move to the next month
+//     document.querySelector('#next-month').onclick = () => {
+//      ++currentMonth.value;
+//     generateCalendar(currentMonth.value, currentYear.value);
+// };
+
+// Load the calendar witht he current month and year
+    const y = new Date().getFullYear();
+    const m = new Date().getMonth();
+
+    generateCalendar(m, y);
 
 
 

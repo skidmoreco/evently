@@ -81,6 +81,10 @@ pad: 10px;
     display: flex;
     align-items: center;
 }
+.month-picker{
+    display: flex;
+    align-items: center;
+}
 .year-change{
     height: 30px;
     width: 30px;
@@ -214,6 +218,4 @@ pad: 10px;
     }
 }
 
-.cst-hide{
-    display: none;
-}
+
