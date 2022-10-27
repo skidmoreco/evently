@@ -1,30 +1,34 @@
-const router = require('express').Router();
-const { Event, User } = require('../../models');
-const withAuth = require('../../utils/auth');
+const router = require("express").Router();
+const { Event, User } = require("../../models");
+const withAuth = require("../../utils/auth");
 
-router.get('/', async (req, res) => {
-  console.log('hitttt');
+router.get("/", withAuth, async (req, res) => {
   try {
     const allEvents = await Event.findAll({
-      include: [{
-        model: User
-      }],
+      include: [
+        {
+          model: User,
+          attributes: ["username"],
+        },
+      ],
     });
     console.log(allEvents);
-    const events = allEvents.map((everyEvent) => everyEvent.get({ plain: true }));
-    
-    res.status(200).json({event: events})
+    const events = allEvents.map((everyEvent) =>
+      everyEvent.get({ plain: true })
+    );
 
-    // res.render('allEvents', {
-    //   events,
-    // });
+    res.status(200).json({ event: events });
+
+    res.render("allEvents", {
+      events,
+    });
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
 // --------------------------------------------------------------
-router.get('/events/:date', async (req, res) => {
+router.get("/events/:date", withAuth, async (req, res) => {
   // grab all the events where the date equals what we're clicking
   // loan handlebars file that displays these specific events on this date
   // using sequelize here to display
@@ -32,13 +36,21 @@ router.get('/events/:date', async (req, res) => {
   try {
     const eventInfo = await Event.findAll({
       // where: {event_date: req.params.date},
-      attributes: ['id','name', 'description', 'location', 'event_date', 'event_time', 'expected_attendance']
+      attributes: [
+        "id",
+        "name",
+        "description",
+        "location",
+        "event_date",
+        "event_time",
+        "expected_attendance",
+      ],
     });
 
-    const events = eventInfo.map((eventsOnDate) => eventsOnDate.get({ plain: true}));
-
-
-    res.render('allEventsOnDate', {
+    const events = eventInfo.map((eventsOnDate) =>
+      eventsOnDate.get({ plain: true })
+    );
+    res.render("allEventsOnDate", {
       events,
     });
   } catch (err) {
@@ -47,24 +59,39 @@ router.get('/events/:date', async (req, res) => {
 });
 // --------------------------------------------------------------
 
-router.get('/:id', withAuth, async (req, res) => {
+router.get("/:id", withAuth, async (req, res) => {
   try {
     const eventSpecific = await Event.findOne({
-      where: {id: req.params.id},
-      attributes: ['id','name', 'description', 'location', 'event_date', 'event_time', 'expected_attendance'],
-      include: [{
-        model: User,
-        attributes: ['id', 'username', 'email', 'password']
-      }],
+      where: { id: req.params.id },
+      attributes: [
+        "id",
+        "name",
+        "description",
+        "location",
+        "event_date",
+        "event_time",
+        "expected_attendance",
+      ],
+      include: [
+        {
+          model: User,
+          attributes: ["id", "username", "email", "password"],
+        },
+      ],
     });
-    res.status(200).json(eventSpecific);
+
+    const targetEvent = eventSpecific.map((event) =>
+      event.get({ plain: true })
+    );
+    res.render("Event", {
+      targetEvent,
+    });
   } catch (err) {
     res.status(500).json(err);
   }
 });
 
-
-router.post('/', withAuth, async (req, res) => {
+router.post("/", withAuth, async (req, res) => {
   try {
     const newEvent = await Event.create({
       ...req.body,
@@ -75,9 +102,9 @@ router.post('/', withAuth, async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
-})
+});
 
-router.post('/:id', withAuth, async (req, res) => {
+router.delete("/:id", withAuth, async (req, res) => {
   try {
     const deleteEvent = await Event.destroy({
       where: {
@@ -87,7 +114,10 @@ router.post('/:id', withAuth, async (req, res) => {
     });
 
     if (!deleteEvent) {
-      res.status(404).json({ message: 'There is no event found with this particular id! Please try again.' });
+      res.status(404).json({
+        message:
+          "There is no event found with this particular id! Please try again.",
+      });
       return;
     }
 
@@ -95,7 +125,6 @@ router.post('/:id', withAuth, async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
   }
-})
+});
 
 module.exports = router;
-
