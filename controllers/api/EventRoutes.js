@@ -17,6 +17,13 @@ router.get('/', withAuth, async (req, res) => {
   }
 });
 
+router.get('/events/:date', withAuth, async (req, res) => {
+  // grab all the events where the date equals what we're clicking
+  // loan handlebars file that displays these specific events on this date
+  // using sequelize here to display
+  // need to be using res.render for handlebars
+})
+
 router.get('/:id', withAuth, async (req, res) => {
   try {
     const eventSpecific = await Event.findOne({
