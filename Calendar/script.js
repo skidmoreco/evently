@@ -38,6 +38,14 @@ month_picker.onclick = () => {
    month_list.classList.add('show');
 }
 
+var event = "Blank Event"
+const generateEventPage = (event) => {
+    window.open("eventpage.html?event=" + event);
+    document.getElementById("eventDate").innerHTML = event;
+  }
+
+
+
 const generateCalendar = (month, year) => {
      calendar_days = document.querySelector('.calendar-days');
     calendar_days.innerHTML = '';
@@ -62,6 +70,7 @@ const generateCalendar = (month, year) => {
     month_picker.innerHTML = month_names[month];
     calendar_header_year.innerHTML = year;
     var first_day = new Date(year, month);
+    var event
 
     for (let i=0; i<=days_of_month[month] + first_day.getDay() - 1; i++) {
         let day = document.createElement('div');
@@ -70,7 +79,11 @@ const generateCalendar = (month, year) => {
             day.innerHTML = i - first_day.getDay() + 1;
             day.id = `${month + 1}/${i - first_day.getDay() + 1}/${year}`;
             day.onclick = () => {
-                console.log(`this is my event ${day.id}`)
+                event = day.id;
+                document.getElementById(event).value = event;
+                generateEventPage(event);
+                // generateEventPage(day.id);
+                // console.log(`this is my event ${day.id}`);
             }
             if (i - first_day.getDay() + 1 === currentDate.getDate() && year ===
             currentDate.getFullYear() && month === currentDate.getMonth()) {
