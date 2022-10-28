@@ -28,24 +28,27 @@ router.get("/", withAuth, async (req, res) => {
 });
 
 // --------------------------------------------------------------
-router.get("/events/:date", withAuth, async (req, res) => {
-  // grab all the events where the date equals what we're clicking
-  // loan handlebars file that displays these specific events on this date
-  // using sequelize here to display
-  // need to be using res.render for handlebars
-  try {
-    const eventInfo = await Event.findAll({
-      // where: {event_date: req.params.date},
-      attributes: [
-        "id",
-        "name",
-        "description",
-        "location",
-        "event_date",
-        "event_time",
-        "expected_attendance",
-      ],
-    });
+
+router.get("/events/:date", async (req, res) => {
+  console.log('cheese')
+    // grab all the events where the date equals what we're clicking
+    // loan handlebars file that displays these specific events on this date
+    // using sequelize here to display
+    // need to be using res.render for handlebars
+    try {
+      const eventInfo = await Event.findAll({
+        // where: {event_date: req.params.date},
+        attributes: [
+          "id",
+          "name",
+          "description",
+          "location",
+          "event_date",
+          "event_time",
+          "expected_attendance",
+        ],
+      });
+
 
     const events = eventInfo.map((eventsOnDate) =>
       eventsOnDate.get({ plain: true })
@@ -57,6 +60,7 @@ router.get("/events/:date", withAuth, async (req, res) => {
     res.status(500).json(err);
   }
 });
+
 // --------------------------------------------------------------
 
 router.get("/:id", withAuth, async (req, res) => {

@@ -1,10 +1,9 @@
-const router = require('express').Router();
-const { Event, User } = require('../../models');
-const loginBtn = document.getElementById("login");
-const formlog = document.querySelector(".login-form");
+// const loginBtn = document.getElementById("login");
+// const formlog = document.querySelector(".login-form");
 
-loginBtn.addEventListener("click", logform);
+// // loginBtn.addEventListener("click", logform);
 
+// ^^^^^^^ put all login code into login.js
 
 function logform() {
     // formlog.removeAttribute("class", "d-none");
@@ -58,23 +57,15 @@ month_picker.onclick = () => {
 //     console.log(event);
 // }
 
-const getEvents = () => {
-router.get('/events/:date', async (req, res) => {
-  try {
-    const eventInfo = await Event.findAll({
-      // where: {event_date: req.params.date},
-      attributes: ['id','name', 'description', 'location', 'event_date', 'event_time', 'expected_attendance']
-    });
-
-    const events = eventInfo.map((eventsOnDate) => eventsOnDate.get({ plain: true}));
-    res.render('allEventsOnDate', {
-      events,
-    });
-  } catch (err) {
-    res.status(500).json(err);
-  }
-});
-}
+// const getEvents = () => {
+//     fetch('api/events/:date', async (req, res) => {
+//         const events = await fetch('/api/users/e', {
+//             method: 'POST',
+//             body: JSON.stringify({ email, password }),
+//             headers: { 'Content-Type': 'application/json' },
+//         });
+// });
+// }
 
 const generateCalendar = (month, year) => {
      calendar_days = document.querySelector('.calendar-days');
@@ -103,26 +94,28 @@ const generateCalendar = (month, year) => {
     var event
 
     for (let i=0; i<=days_of_month[month] + first_day.getDay() - 1; i++) {
-        let day = document.createElement('div');
-              
+        let day = document.createElement('a');
         if (i >= first_day.getDay()) {
             day.innerHTML = i - first_day.getDay() + 1;
-            day.id = `${month + 1}/${i - first_day.getDay() + 1}/${year}`;
-            day.onclick = () => {
-                event = day.id;
-                document.getElementById(event).value = event;
+            let date = `${month + 1}-${i - first_day.getDay() + 1}-${year}`;
+            // test
+            day.href = `api/events/${date}`
+            // test
+            // day.onclick = () => {
+            //     event = day.id;
+            //     document.getElementById(event).value = event;
                 // generateEventPage(event);
-                getEvents()
-            }
+                // getEvents()
+            // }
             if (i - first_day.getDay() + 1 === currentDate.getDate() && year ===
             currentDate.getFullYear() && month === currentDate.getMonth()) {
                 day.classList.add('current-date');
             }
         }
         calendar_days.appendChild(day);
-     }
+    }
 }
-   
+
 // Display the months to choose
  var month_list = calendar.querySelector('.month-list');
  month_names.forEach((e, index) => {
@@ -159,6 +152,4 @@ const generateCalendar = (month, year) => {
     const m = new Date().getMonth();
 
     generateCalendar(m, y);
-
-module.exports = router;
 
