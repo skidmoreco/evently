@@ -37,6 +37,8 @@ router.get("/user", async (req, res) => {
   }
 });
 
+router.get("/") 
+
 router.get("/login", (req, res) => {
   res.render("login");
 });

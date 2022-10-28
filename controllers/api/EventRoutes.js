@@ -28,9 +28,12 @@ router.get("/", withAuth, async (req, res) => {
 });
 
 // --------------------------------------------------------------
+// reouter is /api/events
+// router.get('/id/:id')
 
-router.get("/events/:date", async (req, res) => {
-  console.log('cheese')
+// router /api/events/events/:date
+router.get("/:date", async (req, res) => {
+  // console.log('cheese')
     // grab all the events where the date equals what we're clicking
     // loan handlebars file that displays these specific events on this date
     // using sequelize here to display
@@ -47,23 +50,30 @@ router.get("/events/:date", async (req, res) => {
           "event_time",
           "expected_attendance",
         ],
+        include: {
+          model: User
+        }
       });
-
 
     const events = eventInfo.map((eventsOnDate) =>
       eventsOnDate.get({ plain: true })
     );
-    res.render("allEventsOnDate", {
-      events,
+
+    console.log(events);  // dig into this object to find the USER data
+
+
+    res.render("Event", {
+      events
     });
   } catch (err) {
     res.status(500).json(err);
   }
+
 });
 
 // --------------------------------------------------------------
 
-router.get("/:id", withAuth, async (req, res) => {
+router.get("/:id", /* withAuth, */ async (req, res) => {
   try {
     const eventSpecific = await Event.findOne({
       where: { id: req.params.id },
