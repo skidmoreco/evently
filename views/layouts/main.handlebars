@@ -12,20 +12,15 @@
 </head>
 
 <body>
-
-<nav class = "navbar navbar-expand-lg navbar-light bg-light">
-    <a class = "navbar-brand" href = "#">Evently</a>
-    <button class = "navbar-toggler" type = "button" data-toggle = "collapse" data-target="#navbarNavAltMarkup" aria-controls = "navbarNavAltMarkup" aria-expanded = "false" aria-label = "Toggle navigation">
-        <span class = "navbar-toggler-icon"></span>
-    </button>
-    <div class = "collapse navbar-collapse" id="navbarNavAltMarkup">
-        <div class = "navbar-nav">
-        <a class = "nav-link active" href = "#">Home <span class = "sr-only">(current)</span></a>
-        <a class = "nav-link"  href = "#login">Login</a>
-        <a class = "nav-link" id = "logout" href = "#">Logout</a>
-        </div>
-</div>
-    </nav>
+    <nav>
+        
+        {{#if logged_in}}
+        <a href="/profile">profile</a> |
+        <button class="no-button" id="logout">Login/ Sign Up</button>
+        {{else}}
+        <a href="/login">login</a>
+        {{/if}}
+      </nav>
 
     {{{ body }}}
     
