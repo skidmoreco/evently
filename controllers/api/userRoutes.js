@@ -57,4 +57,17 @@ router.post("/logout", (req, res) => {
   }
 });
 
+router.post("/signup", (req, res) => {
+
+  const userExists = await User.findOne({ where: { email: req.body.email, username: req.body.username } });
+  
+  if (userExists) {
+    res.status(409).end();
+    return;
+  }
+  
+  const newUser = await User.create(req.body);
+  res.status(200).json(newUser).end()
+});
+
 module.exports = router;

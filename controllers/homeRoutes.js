@@ -43,4 +43,14 @@ router.get("/login", (req, res) => {
   res.render("login");
 });
 
+router.get("/sign-up/", (req, res) => {
+  res.render("sign-up");
+});
+
+router.get("/events/:date", (req, res) => {
+  res.render("allEventsOnDate");
+});
+
+
+
 module.exports = router;
