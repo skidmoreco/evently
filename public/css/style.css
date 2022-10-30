@@ -9,7 +9,7 @@ html, body{
     place-items: center;
     font-family: 'Courier New', Courier, monospace;
     background: linear-gradient(to right, #9796f0, #fbc7d4);
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 .logoItems {

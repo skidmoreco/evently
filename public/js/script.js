@@ -48,7 +48,6 @@ month_picker.onclick = () => {
   month_list.classList.remove("hide");
   month_list.classList.add("show");
 };
-
 // pass the date variable to the event page
 // var event = "Blank Event"
 // const generateEventPage = (event) => {

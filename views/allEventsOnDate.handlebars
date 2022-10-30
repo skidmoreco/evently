@@ -1,5 +1,22 @@
-<ul>
-    {{#each event}}
-    <li>{{this}}</li>
-    {{/each}}
-</ul>
+{{#each events as |event|}}
+
+{{event}}
+
+<div class="card event-card" style="width: 18rem;">
+  <img src={{get_cardImage}} class="card-img-top" alt="stock photo" style="width:17rem; height:9rem;">
+  <div class="card-body">
+    <h5 class="card-title">{{ event.name }}</h5>
+    <p class="card-text">{{ event.description }}</p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">{{ event.location }}</li>
+    <li class="list-group-item">{{ event.event_date}}</li>
+    <li class="list-group-item">{{ event.event_time}}</li>
+    <li class="list-group-item">{{event.expected_attendance}}</li>
+  </ul>
+  <div class="card-body">
+    <a href="mailto:{{user.email}}">Email the host here</a>
+  </div> 
+    <h3><em>Event hosted by {{user.username}}</em></h3>
+</div> 
+{{/each}}
