@@ -37,12 +37,13 @@ router.get("/user", withAuth,  async (req, res) => {
   }
 });
 
-router.get("/") 
+router.get("/");
 
 router.get("/login", (req, res) => {
   res.render("login");
 });
 
+<<<<<<< HEAD
 router.get("/sign-up/", (req, res) => {
   res.render("sign-up");
 });
@@ -53,4 +54,14 @@ router.get("/events/:date", (req, res) => {
 
 
 
+=======
+router.get("/logout", (req, res) => {
+  res.render("logout");
+});
+
+router.get("/signup", (req, res) => {
+  res.render("signup");
+});
+
+>>>>>>> main
 module.exports = router;
