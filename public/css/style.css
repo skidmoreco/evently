@@ -1,4 +1,4 @@
-/* stylesheet */
+
 
 *{
     padding: 0;
@@ -87,13 +87,13 @@ html, body{
     height: 610px;
     width: max-content;
     background-color: white;
-    border-radius: 25px;
+    border-radius: 1px;
     overflow: hidden;
     padding: 30px 50px 0px 50px;
     box-shadow: var(--shadow);
 }
 .calendar-header{
-    background: #9796f0;
+    background: #a9a8ef;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -102,7 +102,7 @@ html, body{
     padding: 10px;
 }
 .calendar-body{
-pad: 10px;
+    pad: 10px;
 }
 .calendar-week-days{
     display: grid;
@@ -125,10 +125,11 @@ pad: 10px;
 .calendar-days{
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 2px;
+    gap: 20px;
     color: black;
+    place-items: center;
 }
-.calendar-days div{
+.calendar-days a{
     width: 37px;
     height: 33px;
     display: flex;
@@ -153,7 +154,7 @@ pad: 10px;
     cursor: pointer;
 }
 .year-change:hover{
-    background-color: var(--light-btn);
+    background-color: #9796f0;
     transition: all .2s ease-in-out;
     transform: scale(1.12);
 }
@@ -171,10 +172,10 @@ pad: 10px;
     transition: all 0.2s ease-in-out;
     transform: scale(1.2);
 }
-.calendar-days div span{
+.calendar-days a span{
     position: absolute;
 }
-.calendar-days div:hover{
+.calendar-days a:hover{
     transition: width 0.2s ease-in-out;
     color: red;
     border-radius: 20%;
@@ -221,7 +222,7 @@ pad: 10px;
     visibility: none;
     pointer-events: none;
 }
-.date-time-formate{
+/* .date-time-formate{
     width: max-content;
     height: max-content;
     font-family: 'Courier New', Courier, monospace;
@@ -229,19 +230,20 @@ pad: 10px;
     top: 140px;
     justify-content: center;
     display: inline;
-}
-.day-text-formate{
+} */
+/* .day-text-formate{
     font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     font-size: 1.4rem;
     padding-right: 5%;
     border-right: 3px solid #9796f0;
     position: absolute;
     left: 1rem;
-}
+} */
 
-.date-formate.showtime{
+/* .date-formate.showtime{
     animation: showtime 1s forwards;
-}
+} */
+
 @keyframes to-top{
     0%{
         transform: translateY(0);
@@ -258,7 +260,7 @@ pad: 10px;
     }100%{
         transform: translateX(230%);
         opacity: 1;
-    }
+    } 
 }
 @keyframes to-right{
     10%{
@@ -275,5 +277,4 @@ pad: 10px;
         margin: 5px 0px;
     }
 }
-
 
