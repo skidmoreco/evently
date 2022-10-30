@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const { User } = require("../../models");
+const bcrypt = require("bcrypt");
 
 router.post("/", async (req, res) => {
   try {
@@ -17,34 +18,29 @@ router.post("/", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
+
+  let userData;
+
   try {
-    const userData = await User.findOne({ where: { email: req.body.email } });
-
-    if (!userData) {
-      res
-        .status(400)
-        .json({ message: "Incorrect email or password, please try again" });
-      return;
-    }
-
-    const validPassword = await userData.checkPassword(req.body.password);
-
-    if (!validPassword) {
-      res
-        .status(400)
-        .json({ message: "Incorrect email or password, please try again" });
-      return;
-    }
-
-    req.session.save(() => {
-      req.session.user_id = userData.id;
-      req.session.logged_in = true;
-
-      res.json({ user: userData, message: "You are now logged in!" });
-    });
+    userData = await User.findOne({ where: { email: req.body.email } });
   } catch (err) {
-    res.status(400).json(err);
+    res.status(500).json({message: "Failed to log in."});
   }
+
+  const passwordIsCorrect= bcrypt.compareSync(req.body.password, userData.password);   //userData.password should be an encrypted string
+
+  if (!passwordIsCorrect) {
+    res.status(500).json({message: "Failed to log in."});
+    return;
+  }
+
+  req.session.save(() => {
+    req.session.user_id = userData.id;
+    req.session.logged_in = true;
+  });
+
+  res.status(200).json({ message: "You are now logged in!" });
+
 });
 
 router.post("/logout", (req, res) => {
@@ -57,17 +53,28 @@ router.post("/logout", (req, res) => {
   }
 });
 
-router.post("/signup", (req, res) => {
+router.post("/signup", async (req, res) => {
 
-  const userExists = await User.findOne({ where: { email: req.body.email, username: req.body.username } });
-  
+  let userExists;
+
+  try{
+    userExists = await User.findOne({ where: { email: req.body.email, username: req.body.username } });
+  } catch(error) {
+    res.status(500).json({ message: 'Failed to verify unique name.', error: error });
+  }
+
   if (userExists) {
-    res.status(409).end();
+    res.status(409).json({ message: 'Username and Email already taken.'});
     return;
   }
-  
-  const newUser = await User.create(req.body);
-  res.status(200).json(newUser).end()
+
+  req.body.password = await bcrypt.hash(req.body.password, 10);
+
+  const response = await User.create(req.body);
+
+  res.status(200).json({ message: 'Account created! Please log in.', error: response});
+
+  return;
 });
 
 module.exports = router;

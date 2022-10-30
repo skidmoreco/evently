@@ -1,49 +1,33 @@
 const loginFormHandler = async (event) => {
   event.preventDefault();
 
-  const email = document.querySelector("#email-login").value.trim();
-  const password = document.querySelector("#password-login").value.trim();
-
-  if (email && password) {
-    const response = await fetch("/api/users/login", {
-      method: "POST",
-      body: JSON.stringify({ email, password }),
-      headers: { "Content-Type": "application/json" },
-    });
-
-    if (response.ok) {
-      document.location.replace("/");
-    } else {
-      alert("Failed to log in");
-    }
+  const body = {
+    email: document.querySelector('[name=email]').value.trim(),
+    password: document.querySelector('[name=password]').value.trim(),
   }
-};
 
-const signupFormHandler = async (event) => {
-  event.preventDefault();
-
-  const name = document.querySelector("#name-signup").value.trim();
-  const email = document.querySelector("#email-signup").value.trim();
-  const password = document.querySelector("#password-signup").value.trim();
-
-  if (name && email && password) {
-    const response = await fetch("/api/users", {
-      method: "POST",
-      body: JSON.stringify({ name, email, password }),
-      headers: { "Content-Type": "application/json" },
-    });
-
-    if (response.ok) {
-      document.location.replace("/profile");
-    } else {
-      alert(response.statusText);
-    }
+  if (!body.email || !body.password) {
+    alert('The information provided is incomplete. Please try again.');
+    return;
   }
+
+  const response = await fetch("/api/users/login", {
+    method: "POST",
+    body: JSON.stringify(body),
+    headers: { "Content-Type": "application/json" },
+  });
+
+  console.log(response);
+
+  if (!response.ok) {
+    alert("Failed to log in");
+    return;
+  }
+
+  document.location.replace("/");
+
 };
 
 document
   .querySelector(".login-form")
   .addEventListener("submit", loginFormHandler);
-document
-  .querySelector(".signup-form")
-  .addEventListener("submit", signupFormHandler);
