@@ -38,12 +38,16 @@
     >
         <ul class="navbar-nav ms-auto">
         <li class="nav-item">
+            <a class="nav-link active" aria-current="page" href="/newEvent"
+            >New Event</a>
+        </li>
+        <li class="nav-item moveRight">
             <a class="nav-link active" aria-current="page" href="/login"
-            >Login/ Sign Up</a
+            >Login</a
             >
         </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/logout">Logout</a>
+        <li class="nav-item moveRight" id="logout">
+            <a class="nav-link active" href="/logout">Logout</a>
         </li>
         </ul>
     </div>
@@ -67,7 +71,9 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-ho+j7jyWK8fNQe+A12Hb8AhRq26LrZ/JpcUGGOn+Y7RsweNrtN/tE3MoK7ZeZDyx"
         crossorigin="anonymous"></script>
+    {{#if logged_in}}
     <script src="../../js/logout.js"></script>
+    {{/if}}
     <script src="./js/script.js"></script>
 </body>
 

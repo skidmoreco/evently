@@ -2,12 +2,12 @@ const loginFormHandler = async (event) => {
   event.preventDefault();
 
   const body = {
-    email: document.querySelector('[name=email]').value.trim(),
-    password: document.querySelector('[name=password]').value.trim(),
-  }
+    email: document.querySelector("[name=email]").value.trim(),
+    password: document.querySelector("[name=password]").value.trim(),
+  };
 
   if (!body.email || !body.password) {
-    alert('The information provided is incomplete. Please try again.');
+    alert("The information provided is incomplete. Please try again.");
     return;
   }
 
@@ -25,7 +25,6 @@ const loginFormHandler = async (event) => {
   }
 
   document.location.replace("/");
-
 };
 
 document
