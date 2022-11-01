@@ -50,7 +50,17 @@ router.get("/sign-up/", (req, res) => {
 });
 
 router.get("/events/:date", (req, res) => {
-  res.render("allEventsOnDate");
+
+  // caputre date 
+  let userDate = req.params.date;
+
+  // make a query to our DB with { where: { event_data: userDate } }
+
+
+  // create the context data, to pass to our VIEW
+  let context = ["Testing"]
+
+  res.render("allEventsOnDate", { context });
 });
 
 router.get("/newEvent", (req, res) => {

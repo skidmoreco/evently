@@ -98,9 +98,10 @@ const generateCalendar = (month, year) => {
     let day = document.createElement("a");
     if (i >= first_day.getDay()) {
       day.innerHTML = i - first_day.getDay() + 1;
-      let date = `${month + 1}-${i - first_day.getDay() + 1}-${year}`;
+      // let date = `${month + 1}-${i - first_day.getDay() + 1}-${year}`;
+      let date = `${year}-${month + 1}-${i - first_day.getDay() + 1}`;
       // test
-      day.href = `api/events/${date}`;
+      day.href = `/events/${date}`;
       // test
       // day.onclick = () => {
       //     event = day.id;

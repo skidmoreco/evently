@@ -7,7 +7,7 @@ const loginFormHandler = async (event) => {
   };
 
   if (!body.email || !body.password) {
-    alert("The information provided is incomplete. Please try again.");
+    alert("Failed to log in. Try again.");
     return;
   }
 
@@ -17,16 +17,18 @@ const loginFormHandler = async (event) => {
     headers: { "Content-Type": "application/json" },
   });
 
-  console.log(response);
+  console.log('response', response);
 
   if (!response.ok) {
-    alert("Failed to log in");
+    alert("No good - cheese.");
+    document.querySelector('[name=email]').value = '';
+    document.querySelector('[name=password]').value = '';
     return;
+  } else {
+    alert('You have successfully logged in!')
   }
 
   document.location.replace("/");
 };
 
-document
-  .querySelector(".login-form")
-  .addEventListener("submit", loginFormHandler);
+document.querySelector(".login-form").addEventListener("submit", loginFormHandler);
