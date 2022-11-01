@@ -18,29 +18,31 @@ router.post("/", async (req, res) => {
 });
 
 router.post("/login", async (req, res) => {
-
   let userData;
 
   try {
     userData = await User.findOne({ where: { email: req.body.email } });
   } catch (err) {
-    res.status(500).json({message: "Failed to log in."});
+    res.status(500).json({ message: "Failed to log in." });
   }
 
-  const passwordIsCorrect= bcrypt.compareSync(req.body.password, userData.password);   //userData.password should be an encrypted string
+  const passwordIsCorrect = bcrypt.compareSync(
+    req.body.password,
+    userData.password
+  ); //userData.password should be an encrypted string
 
   if (!passwordIsCorrect) {
-    res.status(500).json({message: "Failed to log in."});
+    res.status(500).json({ message: "Failed to log in." });
     return;
   }
 
   req.session.save(() => {
     req.session.user_id = userData.id;
     req.session.logged_in = true;
+    res.status(200).json({ message: "You are now logged in!" });
   });
 
-  res.status(200).json({ message: "You are now logged in!" });
-
+  console.log(req.session.user_id);
 });
 
 router.post("/logout", (req, res) => {
@@ -54,17 +56,20 @@ router.post("/logout", (req, res) => {
 });
 
 router.post("/signup", async (req, res) => {
-
   let userExists;
 
-  try{
-    userExists = await User.findOne({ where: { email: req.body.email, username: req.body.username } });
-  } catch(error) {
-    res.status(500).json({ message: 'Failed to verify unique name.', error: error });
+  try {
+    userExists = await User.findOne({
+      where: { email: req.body.email, username: req.body.username },
+    });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Failed to verify unique name.", error: error });
   }
 
   if (userExists) {
-    res.status(409).json({ message: 'Username and Email already taken.'});
+    res.status(409).json({ message: "Username and Email already taken." });
     return;
   }
 
@@ -72,7 +77,9 @@ router.post("/signup", async (req, res) => {
 
   const response = await User.create(req.body);
 
-  res.status(200).json({ message: 'Account created! Please log in.', error: response});
+  res
+    .status(200)
+    .json({ message: "Account created! Please log in.", error: response });
 
   return;
 });

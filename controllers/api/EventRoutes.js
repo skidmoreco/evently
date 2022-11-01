@@ -17,7 +17,7 @@ router.get("/", withAuth, async (req, res) => {
       everyEvent.get({ plain: true })
     );
 
-    res.status(200).json({ event: events });
+    // res.status(200).json({ event: events });
 
     res.render("allEvents", {
       events,
@@ -106,33 +106,33 @@ router.get(
   }
 );
 
-router.post("/", withAuth, async (req, res) => {
+router.post("/createEvent", withAuth, async (req, res) => {
   try {
+    console.log(req.session);
+    console.log(req.body);
+    console.log(req.session.user_id);
     const newEvent = await Event.create({
       ...req.body,
-      user_id: req.session_id,
-      name: req.session_name,
-      description: req.session_description,
-      location: req.session_location,
-      event_date: req.session.event_date,
-      event_time: req.session.event_time,
-      expected_attendance: req.expected_attendance,
+      user_id: req.session.user_id,
     });
+
+    console.log(newEvent);
 
     res.status(200).json(newEvent);
   } catch (err) {
-    // res.status(500).json(err);
-    if (
-      user_id ||
-      name ||
-      description ||
-      location ||
-      event_date ||
-      event_time ||
-      expected_attendance == null
-    )
-      window.alert("All of the fields must be filled out!");
-    return;
+    res.status(500).json(err);
+    console.log(err);
+    // if (
+    //   user_id ||
+    //   name ||
+    //   description ||
+    //   location ||
+    //   event_date ||
+    //   event_time ||
+    //   expected_attendance == null
+    // )
+    //   window.alert("All of the fields must be filled out!");
+    // return;
   }
 });
 

@@ -22,17 +22,19 @@ router.get("/", async (req, res) => {
 router.get("/user", withAuth, async (req, res) => {
   try {
     // Find the logged in user based on the session ID
-    const userData = await User.findByPk(req.session.user_id, {
-      attributes: { exclude: ["password"] },
-      include: [{ model: Event }],
-    });
+    // const userData = await User.findOne(req.session.user_id, {
+    //   attributes: { exclude: ["password"] },
+    //   include: [{ model: Event }],
+    // });
+    console.log(req.session.user_id);
 
-    const user = userData.map((event) => event.get({ plain: true }));
-    res.render("main", {
+    // const user = userData.map((event) => event.get({ plain: true }));
+    res.render("homepage", {
       ...user,
       logged_in: true,
     });
   } catch (err) {
+    console.log(err);
     res.status(500).json(err);
   }
 });
