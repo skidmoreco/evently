@@ -5,7 +5,7 @@ const createEvent = async () => {
   let event_time = document.querySelector("[name=eventTime]").value.trim();
   let event_date = document.querySelector("[name=eventDate]").value.trim();
   let expected_attendance = document
-    .querySelector("[name=expAttendance")
+    .querySelector("[name=expAttendance]")
     .value.trim();
 
   if (
@@ -20,12 +20,15 @@ const createEvent = async () => {
     return;
   }
 
+  
+  let newDate = event_date.replace('/', '-');
+
   const body = {
     name: name,
     description: description,
     location: location,
     event_time: event_time,
-    event_date: event_date,
+    event_date: newDate,
     expected_attendance: expected_attendance,
   };
 
@@ -34,6 +37,9 @@ const createEvent = async () => {
     body: JSON.stringify(body),
     headers: { "Content-Type": "application/json" },
   });
+
+
+  // console.log('newDate', newDate);
 
   const message = await response.json().then((data) => data.message);
   if (message) alert(message);
@@ -48,7 +54,9 @@ const createEvent = async () => {
     return;
   }
 
-  document.location.replace("/api/events");
+  window.alert (`Event created on ${body.event_date} successfully`)
+
+  document.location.replace("/");
 };
 
 document.querySelector("#createEvent").addEventListener("click", createEvent);

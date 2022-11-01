@@ -22,28 +22,37 @@ router.post("/login", async (req, res) => {
 
   try {
     userData = await User.findOne({ where: { email: req.body.email } });
-  } catch (err) {
-    res.status(500).json({ message: "Failed to log in." });
-  }
 
-  const passwordIsCorrect = bcrypt.compareSync(
-    req.body.password,
-    userData.password
-  ); //userData.password should be an encrypted string
+    if (!userData) {
+      res.status(400).json('Incorrect email or password, try again.')
+      return;
+    }
 
-  if (!passwordIsCorrect) {
-    res.status(500).json({ message: "Failed to log in." });
-    return;
-  }
+    const validPassword = await userData.checkPassword(req.body.password);
 
+    if (!validPassword) {
+      res.status(400).json('Incorrect email or password, try again.')
+      return;
+    }
+
+    // const passwordIsCorrect = bcrypt.compareSync(
+    //   req.body.password,
+    //   userData.password
+    // );
+ //userData.password should be an encrypted string
+  
   req.session.save(() => {
     req.session.user_id = userData.id;
     req.session.logged_in = true;
     res.status(200).json({ message: "You are now logged in!" });
   });
 
-  console.log(req.session.user_id);
+} catch (err) {
+  console.log(req.session.logged_in);
+  res.status(500).json({ message: "Failed to log in." });
+}
 });
+
 
 router.post("/logout", (req, res) => {
   if (req.session.logged_in) {
