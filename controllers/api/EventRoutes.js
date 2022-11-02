@@ -122,17 +122,6 @@ router.post("/createEvent", withAuth, async (req, res) => {
   } catch (err) {
     res.status(500).json(err);
     console.log(err);
-    // if (
-    //   user_id ||
-    //   name ||
-    //   description ||
-    //   location ||
-    //   event_date ||
-    //   event_time ||
-    //   expected_attendance == null
-    // )
-    //   window.alert("All of the fields must be filled out!");
-    // return;
   }
 });
 

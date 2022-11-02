@@ -56,7 +56,7 @@ const createEvent = async () => {
 
   window.alert (`Event created on ${body.event_date} successfully`)
 
-  document.location.replace("/");
+  document.location.replace(`/${newDate}`);
 };
 
 document.querySelector("#createEvent").addEventListener("click", createEvent);
