@@ -21,6 +21,30 @@
         "location": "Goodale Park",
         "event_date": "06-08-2028",
         "event_time": "1:00pm",
-        "expected_attendance": 4000
+        "expected_attendance": 400
+    },
+    {
+        "name": "Pelotonia",
+        "description": "The James Cancer Center at OSU will be hosting their annual ride to raise funds for cancer awareness and research.",
+        "location": "Various locations. New Albany, OH starting zone.",
+        "event_date": "08/20/2023",
+        "event_time": "1:00pm",
+        "expected_attendance": 500
+    },
+    {
+        "name": "Corey's Birthday",
+        "description": "Join us in celebrating the 50th birthday of our beloved Corey.",
+        "location": "the Cornerstone bar and Grille",
+        "event_date": "05/13/2023",
+        "event_time": "9:00pm",
+        "expected_attendance": 43
+    },
+    {
+        "name": "Superbowl Party",
+        "description": "Come by to see the Bills beat the Cheifs in this year's must-see matchup! There will be beers and food for all. BYOB for bourbon though. Thanks in advance.",
+        "location": "Gacy's basement",
+        "event_date": "01/23/2030",
+        "event_time": "11:11pm",
+        "expected_attendance": 2
     }
 ]

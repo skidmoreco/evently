@@ -16,19 +16,12 @@ router.get("/", async (req, res) => {
     res.status(500).json(err);
   }
 });
-// //////////===================================
 
 // Use withAuth middleware to prevent access to route
 router.get("/user", withAuth, async (req, res) => {
   try {
-    // Find the logged in user based on the session ID
-    // const userData = await User.findOne(req.session.user_id, {
-    //   attributes: { exclude: ["password"] },
-    //   include: [{ model: Event }],
-    // });
     console.log(req.session.user_id);
 
-    // const user = userData.map((event) => event.get({ plain: true }));
     res.render("homepage", {
       ...user,
       logged_in: true,
@@ -39,8 +32,6 @@ router.get("/user", withAuth, async (req, res) => {
   }
 });
 
-router.get("/");
-
 router.get("/login", (req, res) => {
   res.render("login");
 });
@@ -49,26 +40,33 @@ router.get("/sign-up/", (req, res) => {
   res.render("sign-up");
 });
 
-router.get("/events/:date", (req, res) => {
-
-  // caputre date 
-  let userDate = req.params.date;
-
-  // make a query to our DB with { where: { event_data: userDate } }
-
-
-  // create the context data, to pass to our VIEW
-  let context = ["Testing"]
-
-  res.render("allEventsOnDate", { context });
-});
-
 router.get("/newEvent", (req, res) => {
   res.render("createEvent");
 });
 
 router.get("/logout", (req, res) => {
+  req.session.destroy(() => {
+    res.status(200).end();
+  });
   res.render("logout");
 });
+
+router.get("/allEvents", async (req, res) => {
+  try {
+    const eventData = await Event.findAll({
+      include: {
+        model: User
+      },
+    });
+    const events = eventData.map((event) => event.get({ plain: true }));
+    res.render("allEvents", {
+      events,
+      logged_in: req.session.logged_in,
+    });
+  } catch (err) {
+    res.status(500).json(err);
+  }
+});
+
 
 module.exports = router;

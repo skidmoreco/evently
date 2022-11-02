@@ -72,8 +72,7 @@ router.get("/:date", async (req, res) => {
 // --------------------------------------------------------------
 
 router.get(
-  "/:id",
-  /* withAuth, */ async (req, res) => {
+  "/:id", async (req, res) => {
     try {
       const eventSpecific = await Event.findOne({
         where: { id: req.params.id },
@@ -124,28 +123,5 @@ router.post("/createEvent", withAuth, async (req, res) => {
     console.log(err);
   }
 });
-
-// router.delete("/:id", withAuth, async (req, res) => {
-//   try {
-//     const deleteEvent = await Event.destroy({
-//       where: {
-//         id: req.params.id,
-//         user_id: req.session.user_id,
-//       },
-//     });
-
-//     if (!deleteEvent) {
-//       res.status(404).json({
-//         message:
-//           "There is no event found with this particular id! Please try again.",
-//       });
-//       return;
-//     }
-
-//     res.status(200).json(deleteEvent);
-//   } catch (err) {
-//     res.status(500).json(err);
-//   }
-// });
 
 module.exports = router;
