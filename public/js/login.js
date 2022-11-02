@@ -20,14 +20,10 @@ const loginFormHandler = async (event) => {
   console.log('response', response);
 
   if (!response.ok) {
-    alert("You are NOT logged in");
+    alert("Account not found. Please try again, or sign up for an account.");
     document.querySelector('[name=email]').value = '';
     document.querySelector('[name=password]').value = '';
-    // document.querySelector(".login-form").addEventListener("submit", loginFormHandler);
     return;
-
-  } else {
-    alert('You have successfully logged in!')
   }
 
   document.location.replace("/");

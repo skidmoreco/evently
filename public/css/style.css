@@ -12,18 +12,33 @@ body {
     overflow-x: hidden;
 }
 
+a:link, a:visited {
+    color: #9796f0;
+    transition: all .2s ease-in-out;
+}
+
+a:hover {
+    transform: scale(1.1);
+    font-family: fantasy, 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    
+}
+
 .moveRight {
     text-align: right;
-
 }
 
 .logoItems {
     margin: 10px;
+    float: inline-start;
     padding: 10px;
     border: solid;
     border-color: #fbc7d4;
     border-radius: 7px;
     /* text-decoration: underline overline #fbc7d4; */
+}
+
+.restOfNav {
+    float: right;
 }
 
 .logoText {
@@ -64,7 +79,7 @@ body {
     width: 100%;
 }
 
-.loginCard {
+.loginCard, #logout-card, .welcomeCard, #eventCards {
     border-radius: 7px;
     border-style: solid;
     border-width: 5px;
@@ -73,9 +88,10 @@ body {
     color: #9796f0;
 }
 
-/* .event-card {
-    input styling for the individual evebt card here
-} */
+.card {
+    margin: 15px;
+}
+
 
 .container {
     width: max-content;

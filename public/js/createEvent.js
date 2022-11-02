@@ -1,4 +1,7 @@
 const createEvent = async () => {
+
+  window.alert('Must be logged in to create an event.')
+
   let name = document.querySelector("[name=eventName]").value.trim();
   let description = document.querySelector("[name=description]").value.trim();
   let location = document.querySelector("[name=location]").value.trim();
@@ -45,6 +48,7 @@ const createEvent = async () => {
   if (message) alert(message);
 
   if (!response.ok) {
+    alert('Error. Please try logging in to create an Event.')
     document.querySelector("[name=eventName]").value = "";
     document.querySelector("[name=descirption]").value = "";
     document.querySelector("[name=location]").value = "";
@@ -56,7 +60,7 @@ const createEvent = async () => {
 
   window.alert (`Event created on ${body.event_date} successfully`)
 
-  document.location.replace(`/${newDate}`);
+  document.location.replace('/allEvents');
 };
 
 document.querySelector("#createEvent").addEventListener("click", createEvent);

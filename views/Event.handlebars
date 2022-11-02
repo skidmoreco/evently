@@ -10,7 +10,7 @@
   </div>
   <ul class="list-group list-group-flush">
     <li class="list-group-item">{{ event.location }}</li>
-    <li class="list-group-item">{{ event.event_date}}</li>
+    <li class="list-group-item">{{format_date event.event_date}}</li>
     <li class="list-group-item">{{ event.event_time}}</li>
     <li class="list-group-item">{{event.expected_attendance}}</li>
   </ul>

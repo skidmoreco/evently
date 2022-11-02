@@ -1,17 +1,32 @@
 [
     {
-        "username": "Samuel",
-        "email": "sammybluegil@fakemail.com",
-        "password": "password1234"
+        "username": "Sammy Watkins",
+        "email": "sammybluegil@email.com",
+        "password": "$2y$10$K8bk38kk0oSL5N1tCBNnOClxBUNfahVG7VyRyDy4/awM0niNw8"
     },
     {
         "username": "Vito Andolini",
         "email": "donveetz@fakemail.com",
-        "password": "password1234"
+        "password": "$2y$10$bgA7TT9q9WdwjduN1M68GOMY6B/5SNi7fIfqOdQ4MAAIXhRtnoiG6"
+    },
+    {
+        "username": "Chuck Knoll",
+        "email": "chuckyinzaht@gmail.com",
+        "password": "$2y$10$bgA7TT9q9WdwjduN1M68GOMY6B/5SNi7fIfqOdQ4MAAIXhRtnoiG6"
+    },
+    {
+        "username": "Darius Kasperitis",
+        "email": "devops@penguinssports.net",
+        "password": "$2y$10$bgA7TT9q9WdwjduN1M68GOMY6B/5SNi7fIfqOdQ4MAAIXhRtnoiG6"
+    },
+    {
+        "username": "Draymond Green",
+        "email": "drDray@yahooo.com",
+        "password": "$2y$10$Rnlthy6DC6z9nYY3KTWmEeAAkMRzlDNiBnrsZU7hI0n9wAGO.2/AK"
     },
     {
         "username": "Christopher Wallace",
         "email": "notoriousBIG@fakemail.com",
-        "password": "password1234"
+        "password": "$2y$10$HWp1TavojCyE3dB56kgJPObyTPUx7W7Qa4I/8AzkYU6rzwnxLM3U"
     }
 ]
