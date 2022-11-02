@@ -30,12 +30,18 @@ router.post("/login", async (req, res) => {
     res.status(500).json({message: "Failed to log in."});
   }
 
+  if(userData == null) {
+    res.status(400).json({message: "Failed to log in!"});
+    return;
+  }
+
   const passwordIsCorrect = bcrypt.compareSync(
     req.body.password, userData.password);
     //userData.password should be an encrypted string
   
+
   if (!passwordIsCorrect) {
-    res.status(500).json({message: "Failed to log in."});
+    res.status(400).json({message: "Failed to log in!"});
     return;
   }
    
