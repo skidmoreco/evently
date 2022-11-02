@@ -43,12 +43,7 @@ router.post("/login", async (req, res) => {
   });
 
   res.status(200).json({ message: "You are now logged in!" });
-  
-  console.log(userData);
-  console.log(User)
-  console.log(userData.email)
-
-});
+  });
 
 router.post("/logout", (req, res) => {
   if (req.session.logged_in) {
