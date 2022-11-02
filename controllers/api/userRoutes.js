@@ -17,41 +17,78 @@ router.post("/", async (req, res) => {
   }
 });
 
+
+
+
 router.post("/login", async (req, res) => {
+
   let userData;
 
   try {
     userData = await User.findOne({ where: { email: req.body.email } });
+  } catch (err) {
+    res.status(500).json({message: "Failed to log in."});
+  }
 
-    if (!userData) {
-      res.status(400).json('Incorrect email or password, try again.')
-      return;
-    }
-
-    const validPassword = await userData.checkPassword(req.body.password);
-
-    if (!validPassword) {
-      res.status(400).json('Incorrect email or password, try again.')
-      return;
-    }
-
-    // const passwordIsCorrect = bcrypt.compareSync(
-    //   req.body.password,
-    //   userData.password
-    // );
- //userData.password should be an encrypted string
+  const passwordIsCorrect = bcrypt.compareSync(
+    req.body.password, userData.password);
+    //userData.password should be an encrypted string
   
+  if (!passwordIsCorrect) {
+    res.status(500).json({message: "Failed to log in."});
+    return;
+  }
+   
   req.session.save(() => {
     req.session.user_id = userData.id;
     req.session.logged_in = true;
-    res.status(200).json({ message: "You are now logged in!" });
   });
 
-} catch (err) {
-  console.log(req.session.logged_in);
-  res.status(500).json({ message: "Failed to log in." });
-}
+  res.status(200).json({ message: "You are now logged in!" });
+  
+  
+
 });
+
+
+// router.post("/login", async (req, res) => {
+//   let userData;
+
+//   try {
+//     userData = await User.findOne({ where: { email: req.body.email } });
+
+//     // if (!userData) {
+//     //   res.status(400).json('Incorrect email or password, try again.')
+//     //   return;
+//     // }
+
+//     const validPassword = await userData.checkPassword(req.body.password);
+
+//     // if (!validPassword) {
+//     //   res.status(400).json('Incorrect email or password, try again.')
+//     //   return;
+//     // }
+
+//     const passwordIsCorrect = bcrypt.compareSync(
+//       req.body.password,
+//       userData.password
+//     );
+//     console.log(req.body.password)
+//  //userData.password should be an encrypted string
+  
+//   req.session.save(() => {
+//     req.session.user_id = userData.id;
+//     req.session.logged_in = true;
+//     res.status(200).json({ message: "You are now logged in!" });
+//   });
+
+// } catch (err) {
+  
+//   res.status(500).json({ message: "Failed to log in." });
+//   }
+//   console.log(req.session.logged_in);
+//   console.log(userData.id);
+// });
 
 
 router.post("/logout", (req, res) => {
