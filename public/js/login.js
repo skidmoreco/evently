@@ -8,6 +8,10 @@ const loginFormHandler = async (event) => {
 
   if (!body.email || !body.password) {
     alert("Failed to log in. Try again.");
+    document.querySelector('[name=email]').value = '';
+    document.querySelector('[name=password]').value = '';
+
+    console.log('cheese');
     return;
   }
 
@@ -17,17 +21,17 @@ const loginFormHandler = async (event) => {
     headers: { "Content-Type": "application/json" },
   });
 
-  console.log('response', response);
-
+ 
   if (!response.ok) {
     alert("You are NOT logged in");
     document.querySelector('[name=email]').value = '';
     document.querySelector('[name=password]').value = '';
-    // document.querySelector(".login-form").addEventListener("submit", loginFormHandler);
+    
     return;
 
   } else {
-    alert('You have successfully logged in!')
+    alert('You have successfully logged in!');
+   
   }
 
   document.location.replace("/");
