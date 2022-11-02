@@ -1,9 +1,12 @@
-// const loginBtn = document.getElementById("login");
-// const formlog = document.querySelector(".login-form");
-
-// // loginBtn.addEventListener("click", logform);
-
-// ^^^^^^^ put all login code into login.js
+function findPage() {
+var win = window;
+var doc = document;
+var docElem = doc.documentElement
+var body = doc.getElementsByTagName('body')[0];
+var x = win.innerWidth || docElem.clientWidth || body.clientWidth;
+    y = win.innerHeight|| docElem.clientHeight|| body.clientHeight;
+alert(x + ' × ' + y);
+}
 
 function logform() {
   // formlog.removeAttribute("class", "d-none");
@@ -39,33 +42,18 @@ const month_names = [
   "December",
 ];
 // Pick the month
+
 var month_txt;
 var month_picker = document.querySelector("#month-picker");
 const dayTextFormate = document.querySelector(".day-text-formate");
 
-month_picker.onclick = () => {
-  month_list.classList.remove("hideonce");
-  month_list.classList.remove("hide");
-  month_list.classList.add("show");
-};
-// pass the date variable to the event page
-// var event = "Blank Event"
-// const generateEventPage = (event) => {
-//     window.open("eventpage.html?event=" + event, "mywindow",
-//         "menubar=1, width = 300, height = 200");
-
-//     console.log(event);
-// }
-
-// const getEvents = () => {
-//     fetch('api/events/:date', async (req, res) => {
-//         const events = await fetch('/api/users/e', {
-//             method: 'POST',
-//             body: JSON.stringify({ email, password }),
-//             headers: { 'Content-Type': 'application/json' },
-//         });
-// });
-// }
+if (document.querySelector("#month-picker") !== null) {
+  month_picker.onclick = () => {
+    month_list.classList.remove("hideonce");
+    month_list.classList.remove("hide");
+    month_list.classList.add("show");
+  };
+}
 
 const generateCalendar = (month, year) => {
   calendar_days = document.querySelector(".calendar-days");
@@ -102,13 +90,7 @@ const generateCalendar = (month, year) => {
       let date = `${year}-${month + 1}-${i - first_day.getDay() + 1}`;
       // test
       day.href = `/events/${date}`;
-      // test
-      // day.onclick = () => {
-      //     event = day.id;
-      //     document.getElementById(event).value = event;
-      // generateEventPage(event);
-      // getEvents()
-      // }
+      
       if (
         i - first_day.getDay() + 1 === currentDate.getDate() &&
         year === currentDate.getFullYear() &&
@@ -123,38 +105,52 @@ const generateCalendar = (month, year) => {
 };
 
 // Display the months to choose
-var month_list = calendar.querySelector(".month-list");
-month_names.forEach((e, index) => {
-  var month = document.createElement("div");
-  month.innerHTML = `<div>${e}</div>`;
-  month_list.append(month);
-  month.onclick = () => {
-    currentMonth.value = index;
-    generateCalendar(currentMonth.value, currentYear.value);
-    month_list.classList.replace("show", "hide");
-  };
-});
-// Display the new chosen month
-let currentDate = new Date();
-let currentMonth = { value: currentDate.getMonth() };
+
+if (document.querySelector(".month-list") !== null) {
+ 
+  var month_list = calendar.querySelector(".month-list");
+  month_names.forEach((e, index) => {
+    var month = document.createElement("div");
+    month.innerHTML = `<div>${e}</div>`;
+    month_list.append(month);
+    month.onclick = () => {
+      currentMonth.value = index;
+      generateCalendar(currentMonth.value, currentYear.value);
+      month_list.classList.replace("show", "hide");
+    };
+
+  });
+}
+  // Display the new chosen month
+
+  
+  let currentDate = new Date();
+  let currentMonth = { value: currentDate.getMonth() };
 let currentYear = { value: currentDate.getFullYear() };
 
-month_list.classList.add("hideonce");
+if (document.querySelector(".month-list") !== null) {
+  month_list.classList.add("hideonce");
+}
 
-// Move to the previous year
-document.querySelector("#pre-year").onclick = () => {
-  --currentYear.value;
-  generateCalendar(currentMonth.value, currentYear.value);
-};
+if (document.querySelector("#pre-year") !== null) {
+  // Move to the previous year
+  document.querySelector("#pre-year").onclick = () => {
+    --currentYear.value;
+    generateCalendar(currentMonth.value, currentYear.value);
+  };
+}
 
-// Move to the next year
-document.querySelector("#next-year").onclick = () => {
-  ++currentYear.value;
-  generateCalendar(currentMonth.value, currentYear.value);
-};
+if (document.querySelector("#next-year") !== null) {
+  // Move to the next year
+  document.querySelector("#next-year").onclick = () => {
+    ++currentYear.value;
+    generateCalendar(currentMonth.value, currentYear.value);
+  };
+}
+  // Load the calendar witht he current month and year
+  const y = new Date().getFullYear();
+  const m = new Date().getMonth();
 
-// Load the calendar witht he current month and year
-const y = new Date().getFullYear();
-const m = new Date().getMonth();
-
-generateCalendar(m, y);
+if (document.querySelector(".month-list") !== null) {
+  generateCalendar(m, y);
+}
