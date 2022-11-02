@@ -20,15 +20,19 @@ const loginFormHandler = async (event) => {
   console.log('response', response);
 
   if (!response.ok) {
-    alert("No good - cheese.");
+    alert("You are NOT logged in");
     document.querySelector('[name=email]').value = '';
     document.querySelector('[name=password]').value = '';
+    // document.querySelector(".login-form").addEventListener("submit", loginFormHandler);
     return;
+
   } else {
     alert('You have successfully logged in!')
   }
 
   document.location.replace("/");
+
+
 };
 
 document.querySelector(".login-form").addEventListener("submit", loginFormHandler);
