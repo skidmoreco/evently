@@ -19,6 +19,7 @@ router.get("/", withAuth, async (req, res) => {
 
     // res.status(200).json({ event: events });
 
+    // The API ( this is in the API folder ) should really only be returning JSON responses, if we wanted to render a handlebars page, a route like this should be in homeroutes
     res.render("allEvents", {
       events,
     });
@@ -33,6 +34,7 @@ router.get("/", withAuth, async (req, res) => {
 
 // router /api/events/events/:date
 router.get("/:date", async (req, res) => {
+  // Yes Yes I may have told you to put the 'console.log('cheese')' in here, but please remove it before the final submission!
   // console.log('cheese')
   // grab all the events where the date equals what we're clicking
   // loan handlebars file that displays these specific events on this date
@@ -61,6 +63,7 @@ router.get("/:date", async (req, res) => {
 
     console.log(events); // dig into this object to find the USER data
 
+    // The API ( this is in the API folder ) should really only be returning JSON responses, if we wanted to render a handlebars page, a route like this should be in homeroutes
     res.render("Event", {
       events,
     });
@@ -96,6 +99,8 @@ router.get(
       const targetEvent = eventSpecific.map((event) =>
         event.get({ plain: true })
       );
+
+      // The API ( this is in the API folder ) should really only be returning JSON responses, if we wanted to render a handlebars page, a route like this should be in homeroutes
       res.render("Event", {
         targetEvent,
       });

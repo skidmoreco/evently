@@ -1,5 +1,6 @@
 const createEvent = async () => {
 
+  // This should be inside some type of condition, don't want it appearing all the time
   window.alert('Must be logged in to create an event.')
 
   let name = document.querySelector("[name=eventName]").value.trim();

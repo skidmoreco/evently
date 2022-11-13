@@ -1,4 +1,5 @@
 function findPage() {
+  // Should tab this section over
 var win = window;
 var doc = document;
 var docElem = doc.documentElement
@@ -9,6 +10,7 @@ alert(x + ' × ' + y);
 }
 
 function logform() {
+  // Please remove comments like this before final submission!
   // formlog.removeAttribute("class", "d-none");
 
   formlog.classList.remove("d-none");
@@ -74,6 +76,7 @@ const generateCalendar = (month, year) => {
     31,
   ];
 
+  // Please remove comments of old code before final submission!
   // Pick the month to change to
   // month_txt.innerHTML = month_names[month];
   month_picker.innerHTML = month_names[month];
@@ -123,7 +126,7 @@ if (document.querySelector(".month-list") !== null) {
 }
   // Display the new chosen month
 
-  
+  // Need to be consistent with our tabs!
   let currentDate = new Date();
   let currentMonth = { value: currentDate.getMonth() };
 let currentYear = { value: currentDate.getFullYear() };

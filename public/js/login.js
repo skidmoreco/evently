@@ -17,6 +17,7 @@ const loginFormHandler = async (event) => {
     headers: { "Content-Type": "application/json" },
   });
 
+  // This is fine for testing, but we should really remove this before our final submission!
   console.log('response', response);
 
   if (!response.ok) {
