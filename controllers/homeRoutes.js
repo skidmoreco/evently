@@ -17,6 +17,7 @@ router.get("/", async (req, res) => {
   }
 });
 
+// It looks like this route isn't being used. We should remove it from our code before final submission!
 // Use withAuth middleware to prevent access to route
 router.get("/user", withAuth, async (req, res) => {
   try {

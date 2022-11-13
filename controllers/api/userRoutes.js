@@ -54,7 +54,7 @@ router.post("/login", async (req, res) => {
 
 });
 
-
+// This commented out section should be completely removed before final submission!
 // router.post("/login", async (req, res) => {
 //   let userData;
 
